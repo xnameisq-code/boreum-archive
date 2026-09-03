@@ -1,0 +1,312 @@
+:root {
+  --bg: #0A0D16;
+  --panel: #10131F;
+  --line: #242A3C;
+  --line-soft: #1A1F2E;
+  --moon: #EDE3C8;
+  --moon-dim: #9C9578;
+  --text: #E7E8EE;
+  --text-dim: #6B7186;
+  --text-dimmer: #454B60;
+  --font-display: "Noto Serif KR", serif;
+  --font-ui: "Pretendard", -apple-system, "Malgun Gothic", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  position: relative;
+}
+
+::selection { background: var(--moon); color: #14161f; }
+
+/* subtle grain so the flat dark bg doesn't look like a template */
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 64px 56px 40px;
+  max-width: 1080px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.hero-inner { max-width: 480px; }
+
+.eyebrow-line {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+.site-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 6vw, 60px);
+  color: var(--moon);
+  line-height: 1.15;
+}
+
+.site-sub {
+  margin: 18px 0 0;
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 34ch;
+}
+
+.moon-wrap {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 40px rgba(237, 227, 200, 0.08));
+}
+
+.moon-svg { display: block; }
+
+/* ---------- PLAYER ---------- */
+
+.player-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 56px 100px;
+}
+
+.now-playing {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 32px 36px 26px;
+  margin-bottom: 40px;
+}
+
+.np-index {
+  font-size: 12px;
+  color: var(--text-dimmer);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+
+.np-title {
+  margin: 0 0 26px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--text);
+  min-height: 1.3em;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.time {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  width: 36px;
+  flex-shrink: 0;
+}
+.time:last-child { text-align: right; }
+
+.seek {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  outline: none;
+}
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--moon);
+  cursor: pointer;
+  margin-top: -5px;
+  box-shadow: 0 0 0 4px rgba(237, 227, 200, 0.12);
+}
+.seek::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background: var(--moon);
+  cursor: pointer;
+}
+.seek::-moz-range-track {
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.ctrl-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.ctrl-btn svg { width: 20px; height: 20px; }
+.ctrl-btn:hover { color: var(--text); background: var(--line-soft); }
+.ctrl-btn[aria-pressed="true"] { color: var(--moon); }
+
+.ctrl-btn.play {
+  width: 52px;
+  height: 52px;
+  background: var(--moon);
+  color: #14161f;
+}
+.ctrl-btn.play svg { width: 22px; height: 22px; }
+.ctrl-btn.play:hover { background: #F5ECD4; color: #14161f; }
+
+.repeat-one-mark {
+  position: absolute;
+  bottom: 4px;
+  right: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--bg);
+  background: var(--moon);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.ctrl-btn[data-mode="one"] .repeat-one-mark { display: flex; }
+
+.repeat-label {
+  text-align: center;
+  margin: 16px 0 0;
+  font-size: 11px;
+  color: var(--text-dimmer);
+}
+
+/* ---------- TRACK LIST ---------- */
+
+.ledger { border-top: 1px solid var(--line); }
+
+.ledger-head {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  padding: 14px 12px;
+  font-size: 12px;
+  color: var(--text-dimmer);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.track-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+  padding: 13px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.track-row:hover { background: var(--line-soft); }
+
+.track-num {
+  font-size: 13px;
+  color: var(--text-dimmer);
+  font-variant-numeric: tabular-nums;
+}
+
+.track-title {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.track-row.active {
+  border-left-color: var(--moon);
+  background: var(--line-soft);
+}
+.track-row.active .track-num,
+.track-row.active .track-title { color: var(--moon); }
+
+/* ---------- FOOTER ---------- */
+
+.site-footer {
+  text-align: center;
+  padding: 30px 20px 50px;
+  font-size: 12px;
+  color: var(--text-dimmer);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 760px) {
+  .hero {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    padding: 40px 22px 24px;
+    gap: 24px;
+  }
+  .hero-inner { max-width: 100%; }
+  .moon-wrap { align-self: center; }
+  .moon-svg { width: 150px; height: 150px; }
+  .player-shell { padding: 0 18px 80px; }
+  .now-playing { padding: 22px 18px 20px; }
+  .np-title { font-size: 20px; }
+  .controls-row { gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

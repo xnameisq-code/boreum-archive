@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보름 아카이브</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="noise"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow-line">달의 순서로 쌓아 둔 기록</p>
+    <h1 class="site-title">보름 아카이브</h1>
+    <p class="site-sub">총 52편. 재생목록은 위상이 차오르는 순서를 따릅니다.</p>
+  </div>
+
+  <div class="moon-wrap" aria-hidden="true">
+    <svg class="moon-svg" viewBox="0 0 240 240" width="240" height="240">
+      <defs>
+        <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#EDE3C8" stop-opacity="0.55"/>
+          <stop offset="60%" stop-color="#EDE3C8" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#EDE3C8" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="moonClip">
+          <circle cx="120" cy="120" r="86"/>
+        </clipPath>
+      </defs>
+      <circle cx="120" cy="120" r="118" fill="url(#moonGlow)"/>
+      <circle cx="120" cy="120" r="86" fill="#171B29" stroke="#3A4058" stroke-width="1"/>
+      <g clip-path="url(#moonClip)">
+        <rect id="moonShadow" x="120" y="34" width="120" height="172" fill="#0A0D16"/>
+        <rect x="34" y="34" width="172" height="172" fill="none"/>
+      </g>
+      <circle cx="120" cy="120" r="86" fill="none" stroke="#2C3145" stroke-width="1"/>
+    </svg>
+  </div>
+</header>
+
+<main class="player-shell">
+  <section class="now-playing" id="nowPlaying">
+    <div class="np-index" id="npIndex">00 / 52</div>
+    <h2 class="np-title" id="npTitle">재생할 곡을 골라 주세요</h2>
+
+    <div class="progress-row">
+      <span class="time" id="curTime">0:00</span>
+      <input type="range" id="seek" class="seek" min="0" max="100" value="0" step="0.1" aria-label="재생 위치">
+      <span class="time" id="durTime">0:00</span>
+    </div>
+
+    <div class="controls-row">
+      <button class="ctrl-btn" id="shuffleBtn" aria-pressed="false" title="랜덤 셔플">
+        <svg viewBox="0 0 24 24"><path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7M21 16v5h-5M8 3H3v5m0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="ctrl-btn" id="prevBtn" title="이전 곡">
+        <svg viewBox="0 0 24 24"><path d="M6 5v14M18 5 8 12l10 7V5Z" fill="currentColor"/></svg>
+      </button>
+      <button class="ctrl-btn play" id="playBtn" title="재생/일시정지">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M7 5v14l12-7L7 5Z" fill="currentColor"/></svg>
+        <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+      </button>
+      <button class="ctrl-btn" id="nextBtn" title="다음 곡">
+        <svg viewBox="0 0 24 24"><path d="M18 5v14M6 5l10 7-10 7V5Z" fill="currentColor"/></svg>
+      </button>
+      <button class="ctrl-btn" id="repeatBtn" data-mode="off" title="반복 모드">
+        <svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="repeat-one-mark" id="repeatOneMark">1</span>
+      </button>
+    </div>
+    <p class="repeat-label" id="repeatLabel">반복 꺼짐</p>
+  </section>
+
+  <section class="ledger" aria-label="전체 트랙 목록">
+    <div class="ledger-head">
+      <span>번호</span>
+      <span>제목</span>
+    </div>
+    <ol class="track-list" id="trackList"></ol>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>보름 아카이브 · 개인 창작물 기록소</p>
+</footer>
+
+<audio id="audio" preload="metadata" controlslist="nodownload noplaybackrate" disablepictureinpicture disableremoteplayback></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
